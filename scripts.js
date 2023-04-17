@@ -14,7 +14,7 @@ function loginAttempt() {
     const userAttempt = { name: userGet.value };
     let promise = axios.post(participantsLink, userAttempt);
     promise.then(successJoin);
-    promise.catch(cantJoin);
+    promise.catch(window.location.reload());
 }
 
 function successJoin() {
@@ -46,6 +46,7 @@ function sendMessage() {
     const promise = axios.post(messagesLink, messageSent);
     document.querySelector(".typedMessage").value = "";
     promise.then(requestMessages);
+    promise.catch(window.location.reload());
 }
 
 function requestMessages() {
@@ -54,6 +55,7 @@ function requestMessages() {
         let messages = gotten.data;
         updateMessages(messages);
     })
+    promise.catch(window.location.reload());
 }
 
 function updateMessages(messages) {
