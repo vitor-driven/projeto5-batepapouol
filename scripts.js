@@ -49,20 +49,29 @@ function sendMessage() {
 
 function requestMessages() {
     const promise = axios.get(messagesLink);
-    promise.then(updateMessages);
+    promise.then(gotten => {
+        let messages = gotten.data;
+        updateMessages(messages);
+    })
 }
 
-function updateMessages(x) {
-    let i;
+function updateMessages(messages) {
     let messageList = document.querySelector(".message-list");
-    for (i = 0, i < x.data.length; i++; ) {
-        if (x.data[i].type == "status") {
-            messageList.innerHTML += `<div class="user-joined-or-left"><span class="timestamp">${x.data[i].time}</span><em>${x.data[i].from}</em> ${x.data[i].text}</div>`;
+    messages.forEach((message) => {
+        if (message.type == "status") {
+            messageList.innerHTML += `
+            <div class="user-joined-or-left text-message">
+                <span class="timestamp">(${message.time})</span>  <em>${message.from}</em>  ${message.text}
+            </div>`;
         }
-        if (x.data[i].type == "message") {
-            messageList.innerHTML += `<div class="user-joined-or-left"><span class="timestamp">${x.data[i].time}</span><em>${x.data[i].from}</em> para <em>${x.data[i].to}</em>: ${x.data[i].text}</div>`;
+        if (message.type == "message") {
+            messageList.innerHTML += `
+            <div class="public-message text-message">
+                <span class="timestamp">(${message.time})</span>  <em>${message.from}</em>  para  <em>${message.to}</em>: ${message.text}
+            </div>`;
         }
-    }
+    })
+    document.querySelector(".message-list").lastElementChild.scrollIntoView();
 }
 
 function updateConnection() {
