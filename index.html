@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="css/reset.css" />
         <link rel="stylesheet" href="css/styles.css" />
         <link rel="icon" href="data:," />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+        ></script>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,10 +25,15 @@
             <div class="login">
                 <input
                     type="text"
+                    data-test="input-name"
                     class="username-input"
                     placeholder="Digite seu nome"
                 />
-                <button class="login-button" onclick="loginAttempt()">
+                <button
+                    class="login-button"
+                    data-test="send-name"
+                    onclick="loginAttempt()"
+                >
                     Entrar
                 </button>
             </div>
@@ -42,10 +51,15 @@
             <div class="bottombar-content">
                 <input
                     type="text"
-                    class="typeMessage"
+                    data-test="input-message"
+                    class="typedMessage"
                     placeholder="Escreva aqui..."
                 />
-                <ion-icon name="paper-plane-outline"></ion-icon>
+                <ion-icon
+                    data-test="send-message"
+                    name="paper-plane-outline"
+                    onclick="sendButton()"
+                ></ion-icon>
             </div>
         </div>
         <script

@@ -2,15 +2,16 @@ axios.defaults.headers.common["Authorization"] = "RGIC4Pzu7UNuLvDHOS4ZuJLs";
 
 let userGet = document.querySelector(".username-input");
 let messageList = document.querySelector(".message-list");
+let userName;
 
 function loginAttempt() {
-    const userName = { name: userGet.value };
-    const promise = axios.post(
+    userName = { name: userGet.value };
+    const tryLogin = axios.post(
         "https://mock-api.driven.com.br/api/vm/uol/participants",
         userName
     );
-    promise.then(successJoin);
-    promise.catch(cantJoin);
+    tryLogin.then(successJoin);
+    tryLogin.catch(cantJoin);
 }
 
 function successJoin() {
@@ -20,7 +21,7 @@ function successJoin() {
         requestMessages();
     }, 3000);
     setInterval(() => {
-        updateConnection(userGet);
+        updateConnection();
     }, 5000);
 }
 
@@ -31,39 +32,44 @@ function cantJoin(error) {
 }
 
 function sendMessage() {
+    let messageText = document.querySelector(".typedMessage").value;
     const messageSent = {
-        from: userGet,
+        from: userGet.value,
         to: "Todos",
-        text: document.querySelector(".typedMessage").value,
+        text: messageText,
         type: "message",
     };
-    const promise = axios.post(
+    const sendToServer = axios.post(
         "https://mock-api.driven.com.br/api/vm/uol/messages",
         messageSent
     );
-    promise.then(requestMessages);
-    promise.catch(window.location.reload());
+    sendToServer.then(requestMessages);
+    sendToServer.catch(window.location.reload());
 }
 
 function requestMessages() {
-    const promise = axios.get(
-        "https://mock-api.driven.com.br/api/v6/uol/messages"
+    const msgReq = axios.get(
+        "https://mock-api.driven.com.br/api/vm/uol/messages"
     );
-    promise.then(updateMessages);
+    msgReq.then(updateMessages);
+    msgReq.catch(window.location.reload());
 }
 
 function updateMessages(x) {
     messageList.innerHTML = "";
-    for (i = 0, i < x.data.length; x++; ) {
+    for (i = 0, i < 100; i++; ) {
         if (x.data[i].type == "status") {
-            messageList.innerHTML += `<li class="user-joined-or-left"></li><span class="timestamp">${x.data[i].time}</span><em>${x.data[i].from}</em> ${x.data[i].text}</li>`;
+            messageList.innerHTML += `<li data-test="message" class="user-joined-or-left"><span class="timestamp">${x.data[i].time}</span><em>${x.data[i].from}</em> ${x.data[i].text}</li>`;
         }
         if (x.data[i].type == "message") {
-            messageList.innerHTML += `<li class="user-joined-or-left"></li><span class="timestamp">${x.data[i].time}</span><em>${x.data[i].from}</em> para <em>${x.data[i].to}</em>: ${x.data[i].text}</li>`;
+            messageList.innerHTML += `<li data-test="message" class="text-message"><span class="timestamp">${x.data[i].time}</span><em>${x.data[i].from}</em> para <em>${x.data[i].to}</em>: ${x.data[i].text}</li>`;
         }
     }
 }
 
-function deleteFirstMessage() {}
-
-function updateConnection() {}
+function updateConnection() {
+    const updateCon = axios.post(
+        "https://mock-api.driven.com.br/api/vm/uol/status",
+        userName
+    );
+}
