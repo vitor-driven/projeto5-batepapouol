@@ -1,7 +1,6 @@
 axios.defaults.headers.common['Authorization'] = 'aSaefb8T8sX6LpwwvW21qigP';
 
 let userGet = document.querySelector(".username-input");
-let messageList = document.querySelector(".message-list");
 const participantsLink =
     "https://mock-api.driven.com.br/api/vm/uol/participants";
 const messagesLink = "https://mock-api.driven.com.br/api/vm/uol/messages";
@@ -54,8 +53,9 @@ function requestMessages() {
 }
 
 function updateMessages(x) {
-    messageList.innerHTML = "";
-    for (i = 0, i < x.data.length; x++; ) {
+    let i;
+    let messageList = document.querySelector(".message-list");
+    for (i = 0, i < x.data.length; i++; ) {
         if (x.data[i].type == "status") {
             messageList.innerHTML += `<div class="user-joined-or-left"><span class="timestamp">${x.data[i].time}</span><em>${x.data[i].from}</em> ${x.data[i].text}</div>`;
         }
@@ -65,8 +65,7 @@ function updateMessages(x) {
     }
 }
 
-function deleteFirstMessage() {}
-
 function updateConnection() {
-    const updateCon = axios.post(statusLink, userName);
+    const userAttempt = { name: userGet.value };
+    const updateCon = axios.post(statusLink, userAttempt);
 }
