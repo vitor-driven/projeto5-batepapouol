@@ -4,9 +4,6 @@ body {
 }
 
 * {
-    box-sizing: border-box;
-}
-* {
     text-decoration: none;
 }
 
@@ -111,6 +108,11 @@ body {
     font-size: 32px;
 }
 
+.typedMessage {
+    width: 100%;
+    height: auto;
+}
+
 .user-joined-or-left {
     background-color: #dcdcdc;
 }
@@ -123,6 +125,8 @@ body {
     padding: 10px 8px;
     display: flex;
     align-items: center;
+    height: auto;
+    flex-wrap: wrap;
 }
 
 .public-message {
@@ -136,6 +140,11 @@ body {
 .timestamp {
     color: #aaaaaa;
     font-weight: 400;
+    margin-right: 5px;
+}
+
+.bold-name {
+    font-weight: 700;
 }
 
 .message-list {

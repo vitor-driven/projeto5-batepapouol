@@ -44,6 +44,7 @@ function sendMessage() {
         type: "message",
     };
     const promise = axios.post(messagesLink, messageSent);
+    document.querySelector(".typedMessage").value = "";
     promise.then(requestMessages);
 }
 
@@ -57,17 +58,18 @@ function requestMessages() {
 
 function updateMessages(messages) {
     let messageList = document.querySelector(".message-list");
+    messageList.innerHTML = "";
     messages.forEach((message) => {
         if (message.type == "status") {
             messageList.innerHTML += `
-            <div class="user-joined-or-left text-message">
-                <span class="timestamp">(${message.time})</span>  <em>${message.from}</em>  ${message.text}
+            <div class="user-joined-or-left text-message" data-test="message">
+                <p><span class="timestamp">(${message.time})</span><span class=message-content><span class=bold-name>${message.from}</span> ${message.text}</span</p>
             </div>`;
         }
         if (message.type == "message") {
             messageList.innerHTML += `
-            <div class="public-message text-message">
-                <span class="timestamp">(${message.time})</span>  <em>${message.from}</em>  para  <em>${message.to}</em>: ${message.text}
+            <div class="public-message text-message" data-test="message">
+                <p><span class="timestamp">(${message.time})</span><span class=bold-name>${message.from}</span> para <span class=bold-name>${message.to}</span>: ${message.text}</p>
             </div>`;
         }
     })
