@@ -108,9 +108,22 @@ body {
     font-size: 32px;
 }
 
+*:focus {
+    outline: none;
+}
+
 .typedMessage {
     width: 100%;
     height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border: 0;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
 }
 
 .user-joined-or-left {
